@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+  
+    <!-- forms -->
+
+    <record id="view_bom_category_form_inherit" model="ir.ui.view">
+        <field name="name">bom.category.inherited</field>
+        <field name="model">mrp.bom</field>
+        <field name="inherit_id" ref="mrp.mrp_bom_form_view"/>        
+        <field name="arch" type="xml">
+            <field name="code" position="after">
+               <field name="category_id" string="Main Category"/>
+               <field name="alt_category_id" string="Alternative Category"/>
+            </field>
+        </field>
+    </record>
+    
+    <!-- trees -->
+
+    <record id="view_bom_category_tree_inherit" model="ir.ui.view">
+      <field name="name">bom.category.inherited</field>
+      <field name="model">mrp.bom</field>
+      <field name="inherit_id" ref="mrp.mrp_bom_tree_view"/>
+      <field name="arch" type="xml">
+          <field name="code" position="after">
+            <field name="category_id" optional="show"/> 
+            <field name="alt_category_id" optional="hide"/>            
+          </field>                 
+      </field>
+    </record>   
+
+    <!-- search -->
+
+    <record id="bom_category_search_inherit" model="ir.ui.view">
+            <field name="name">bom.category.search</field>
+            <field name="model">mrp.bom</field>
+            <field name="inherit_id" ref="mrp.view_mrp_bom_filter"/>
+            <field name="arch" type="xml">                
+              <xpath expr="//search" position="inside">
+                <field name="category_id" string="Main Category"/>
+                <field name="alt_category_id" string="Alt. Category"/>
+                 <group>
+                    <filter string="Main Category" name="category" domain="[]" context="{'group_by': 'category_id'}"/>
+                    <filter string="Alt. Category" name="alt_category" domain="[]" context="{'group_by': 'alt_category_id'}"/>
+                 </group>
+              </xpath>
+            </field>
+    </record>
+
+    <!-- actions opening views on models -->   
+    
+    <!-- server action to the one above -->
+
+    <!-- Top menu item -->
+
+
+  
+</odoo>
