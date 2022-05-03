@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+  
+        <!-- trees -->
+
+    <record id="view_product_final_tree" model="ir.ui.view">
+        <field name="name">Final Product</field>
+        <field name="model">product.final</field>
+        <field name="arch" type="xml">          
+            <tree default_order='code'>              
+               <field name="code"/>
+               <field name="name"/>              
+            </tree>          
+        </field>
+    </record>
+
+    <record id="view_quartering_ubication_tree" model="ir.ui.view">
+        <field name="name">Quartering Ubications Products</field>
+        <field name="model">quartering.ubication</field>
+        <field name="arch" type="xml">          
+            <tree> 
+              <field name="product_final_id"/>
+               <!-- <field name="position"/> -->
+               <!-- <field name="name"/>               -->
+            </tree>          
+        </field>
+    </record>
+
+        <!-- forms -->
+
+    <record id="view_product_final_form" model="ir.ui.view">
+        <field name="name">Final Product</field>
+        <field name="model">product.final</field>
+        <field name="arch" type="xml">         
+          <form>
+            <sheet>
+              <group>
+               <field name="code"/>
+               <field name="name"/>
+              </group>
+            </sheet>
+          </form>          
+        </field>
+    </record>
+
+    <record id="view_quartering_ubication_form" model="ir.ui.view">
+        <field name="name">Quartering Ubication Product</field>
+        <field name="model">quartering.ubication</field>
+        <field name="arch" type="xml">         
+          <form>
+            <sheet>
+              <group>
+               <field name="product_final_id"/>
+               <!-- <field name="position"/>
+               <field name="name"/> -->
+              </group>
+            </sheet>
+          </form>          
+        </field>
+    </record>
+
+
+      <!-- notebook pages -->
+        
+    <record model="ir.ui.view" id="quartering_ubication_form_page_view">
+      <field name="name">Quartering Ubications</field>
+      <field name="model">product.product</field>
+      <field name="inherit_id" ref="product.product_normal_form_view"/>      
+      <field name="arch" type="xml">        
+          <page name="general_information" position="after">
+            <page name="quartering_ubication_form_page"
+                  string="Quartering Ubications">                
+                  <group>                                   
+                    <field name="quartering_ubication_ids" nolabel="1">
+                        <!-- Incorporando aquí abajo los campos, logramos que se generen en el interior del One2many
+                        Entiende que es un one2many con un comodelname desde product.product a quartering.ubication, por eso 
+                        puede localizar los campos position, product_id y product_final_id -->
+                        <tree>
+                            <field name="product_id"/>
+                            <field name="product_final_id"/>
+                            <field name="position"/>
+                        </tree>
+                    </field>                                      
+                  </group>              
+            </page>
+          </page>        
+      </field>
+    </record>  
+
+    <!-- actions opening views on model -->
+
+    <record model="ir.actions.act_window" id="product_final_action_window">
+      <field name="name">Final Product</field>
+      <field name="res_model">product.final</field>
+      <field name="view_mode">tree,form</field>
+    </record>  
+
+    <record model="ir.actions.act_window" id="quartering_ubication_action_window">
+      <field name="name">Quartering Ubication Product</field>
+      <field name="res_model">quartering.ubication</field>
+      <field name="view_mode">tree,form</field>
+    </record>  
+
+
+    <!-- menus -->
+
+    <menuitem id="product_final_menu" name="Final Product"
+        parent="stock.menu_product_in_config_stock"       
+        action="product_final_action_window"/>
+
+    <menuitem id="quartering_ubication_menu" name="Quartering Ubication Products"
+        parent="sale.product_menu_catalog"       
+        action="quartering_ubication_action_window"/>
+
+
+</odoo>
